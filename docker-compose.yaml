@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  vue-app:
+    image: music-vue-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '5173:5173'
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    restart: unless-stopped
