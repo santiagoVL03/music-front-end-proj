@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: vue-app
-          image: music-vue-app:latest
+          image: homura69:latest
           ports:
             - containerPort: 5173
           resources:
