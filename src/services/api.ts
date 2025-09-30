@@ -10,7 +10,7 @@ import type {
   ApiError,
 } from '@/types'
 
-const API_BASE_URL = 'http://localhost:8000'
+const API_BASE_URL = 'http://web:8000'
 
 // Create axios instance with default config
 const api = axios.create({
