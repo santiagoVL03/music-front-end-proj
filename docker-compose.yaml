@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   vue-app:
@@ -7,13 +7,16 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '5173:5173'
+      - "5173:5173"
+    environment:
+      - NODE_ENV=production
+      - BACKEND_URL=http://backend:8000
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
         reservations:
-          cpus: '0.25'
+          cpus: "0.25"
           memory: 256M
     restart: unless-stopped

@@ -10,7 +10,7 @@ import type {
   ApiError,
 } from '@/types'
 
-const API_BASE_URL = 'http://192.168.122.159:30080'
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://backend:8000'
 
 // Create axios instance with default config
 const api = axios.create({
