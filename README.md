@@ -33,6 +33,7 @@ This frontend connects to a backend API with the following endpoints:
 - **HTTP Client**: Axios
 - **State Management**: Vue Composables
 - **Routing**: Vue Router 4
+- **Hosting**: AWS S3 Static Website Hosting
 
 ## Project Structure
 
@@ -124,6 +125,107 @@ The interface is optimized for:
 - Tablets
 - Mobile phones
 - Various screen sizes
+
+## AWS S3 Deployment
+
+This project is deployed as a static website using **Amazon S3** for hosting. The deployment takes advantage of S3's static website hosting capabilities to serve the built Vue.js application.
+
+### S3 Bucket Configuration
+
+**Bucket Name**: `musiccloud-frontend-santiago`
+
+The bucket is configured with:
+
+1. **Static Website Hosting**: Enabled to serve the Vue.js SPA
+2. **Public Read Access**: Configured via bucket policy to allow public access to all objects
+3. **Bucket Policy**: Applied to grant `s3:GetObject` permission to all users
+
+### Bucket Policy
+
+The following bucket policy is applied to allow public read access:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicReadGetObject",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::musiccloud-frontend-santiago/*"
+    }
+  ]
+}
+```
+
+This policy enables anyone to read objects from the bucket, which is necessary for serving the website to users.
+
+### Deployment Process
+
+The deployment process involves two main steps:
+
+1. **Build the Application**:
+
+   ```bash
+   npm run build
+   ```
+
+   This command:
+   - Runs TypeScript type checking with `vue-tsc`
+   - Compiles and bundles the Vue.js application using Vite
+   - Generates optimized production files in the `dist/` directory
+   - Minifies JavaScript and CSS
+   - Optimizes assets for production
+
+2. **Sync to S3 Bucket**:
+   ```bash
+   aws s3 sync dist/ s3://musiccloud-frontend-santiago/ --delete
+   ```
+   This command:
+   - Uploads all files from the `dist/` directory to the S3 bucket
+   - Uses the `--delete` flag to remove files from S3 that are no longer in `dist/`
+   - Only uploads changed files for efficient deployment
+   - Preserves the directory structure
+
+### Deployment Benefits
+
+Using AWS S3 for hosting provides several advantages:
+
+- **Cost-Effective**: Pay only for storage and bandwidth used
+- **Scalability**: Automatically handles traffic spikes
+- **High Availability**: Built-in redundancy and durability
+- **Fast Content Delivery**: Low latency for static assets
+- **Simple Deployment**: Easy sync with AWS CLI
+- **Version Control**: Can maintain multiple versions of the site
+
+### Prerequisites for Deployment
+
+To deploy this project to AWS S3, you need:
+
+1. **AWS Account**: Active AWS account with appropriate permissions
+2. **AWS CLI**: Installed and configured with credentials
+   ```bash
+   aws configure
+   ```
+3. **S3 Bucket**: Created with static website hosting enabled
+4. **Bucket Policy**: Applied to allow public read access (see policy above)
+
+### Accessing the Deployed Website
+
+Once deployed, the website can be accessed via:
+
+- **S3 Website Endpoint**: `http://musiccloud-frontend-santiago.s3-website-<region>.amazonaws.com`
+- Replace `<region>` with your bucket's AWS region (e.g., `us-east-1`)
+
+### Alternative Deployment Options
+
+While this project uses S3, it can also be deployed to:
+
+- **Kubernetes**: Using the included `frontent.yaml` deployment configuration
+- **Docker**: Using the included `dockerfile` for containerization
+- **CloudFront**: For CDN capabilities and custom domain support
+- **Other Static Hosts**: Netlify, Vercel, GitHub Pages, etc.
 
 ## Development
 

@@ -11,7 +11,7 @@ import type {
 } from '@/types'
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || 'http://web-lb-1985071396.us-east-1.elb.amazonaws.com'
+  import.meta.env.VITE_API_BASE_URL || 'http://web-lb-524191478.us-east-1.elb.amazonaws.com'
 
 // Create axios instance with default config
 const api = axios.create({
