@@ -23,15 +23,13 @@
         <nav class="hidden md:flex space-x-6">
           <router-link
             to="/"
-            class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors"
-            active-class="text-primary-600 border-b-2 border-primary-600"
+            class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors router-link-active"
           >
             All Songs
           </router-link>
           <router-link
             to="/search"
-            class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors"
-            active-class="text-primary-600 border-b-2 border-primary-600"
+            class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors router-link-active"
           >
             Search
           </router-link>
@@ -201,6 +199,7 @@ const handleCreateUser = async () => {
 
 <style scoped>
 .router-link-active {
-  @apply text-primary-600;
+  color: #2563eb;
+  border-bottom: 2px solid #2563eb;
 }
 </style>
